@@ -45,6 +45,7 @@ jobs:
         run: |
           git status
           git remote -v
+          git fetch --all
           echo "GITHUB_ACTOR: $GITHUB_ACTOR";
           echo "email: `git show -s --format='%ae' ${{ github.sha }}`";
           git config --global user.name "$GITHUB_ACTOR"
