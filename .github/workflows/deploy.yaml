@@ -46,8 +46,13 @@ jobs:
           git status
           git branch
           git remote -v
-          git config --global user.name '$GITHUB_ACTOR'
-          git config --global user.email '$GITHUB_ACTOR@users.noreply.github.com'
+          echo "INPUT_COMMIT_USER_NAME: ${INPUT_COMMIT_USER_NAME}";
+          echo "INPUT_COMMIT_USER_EMAIL: ${INPUT_COMMIT_USER_EMAIL}";
+          echo "INPUT_COMMIT_MESSAGE: ${INPUT_COMMIT_MESSAGE}";
+          echo "INPUT_COMMIT_AUTHOR: ${INPUT_COMMIT_AUTHOR}";
+          echo "GITHUB_ACTOR: $GITHUB_ACTOR";
+          git config --global user.name "$GITHUB_ACTOR"
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config --list
           git checkout -b gh-pages-test
           git commit -am "Build ${{ github.sha }}"
