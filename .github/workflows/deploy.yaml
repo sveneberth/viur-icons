@@ -13,17 +13,32 @@ jobs:
         with:
           ref: gh-pages
 
+      - name: Check python
+        run: python -V
+
+      - name: Submodule init
+        run: |
+          git submodule init
+          git submodule update --recursive
+          git status
+
+      - name: Update Submodule icons
+        run: |
+          pushd icons
+          git checkout ${{ github.sha }}
+          git status
+          popd
+
       - name: Build Icon List
         run: python buildIconList.py
 
-      - name: NPM install
+      - name: NPM install and run Gulp
         run: |
-          cd sources
+          pushd sources
           npm install
           npm install gulp -g
-
-      - name: Gulp
-        run: gulp
+          gulp
+          popd
 
       - uses: EndBug/add-and-commit@v7
         with:
