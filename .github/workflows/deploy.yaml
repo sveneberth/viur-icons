@@ -49,6 +49,5 @@ jobs:
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email `git show -s --format='%ae' ${{ github.sha }}`
           git config --list
-#          git checkout -b gh-pages-test
           git commit -am "Build ${{ github.sha }}"
           git push origin gh-pages
