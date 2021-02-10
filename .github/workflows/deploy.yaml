@@ -46,6 +46,7 @@ jobs:
           git status
           git remote -v
           echo "GITHUB_ACTOR: $GITHUB_ACTOR";
+          echo "email: `git show -s --format='%ae' ${{ github.sha }}`";
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email `git show -s --format='%ae' ${{ github.sha }}`
           git config --list
