@@ -14,10 +14,11 @@ jobs:
           ref: gh-pages
 
       - name: Check python
-        run: python -V
+        run: python3 -V
 
       - name: Submodule init
         run: |
+          git submodule set-url icons ${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }}.git
           git submodule init
           git submodule update --recursive
           git status
@@ -30,7 +31,7 @@ jobs:
           popd
 
       - name: Build Icon List
-        run: python buildIconList.py
+        run: python3 buildIconList.py
 
       - name: NPM install and run Gulp
         run: |
