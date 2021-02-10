@@ -61,7 +61,7 @@ class BuildIconList(object):
 if __name__ == "__main__":
 	iconList = BuildIconList(
 		folder="./icons/",
-		ignoreFiles=[".git", ".gitignore", "README.md"]
+		ignoreFiles=[".git", ".gitignore", "README.md", "LICENSE", "deploy.yaml"]
 	)
 	iconList.collect()
 
