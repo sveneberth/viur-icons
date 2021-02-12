@@ -2,7 +2,7 @@ name: Build and Deploy GitHub Page
 on:
   push:
     branches:
-      - 'feature/viur-3.0'
+      - "feature/viur-3.0"
 
 jobs:
   deploy:
@@ -38,10 +38,12 @@ jobs:
           npx gulp
           popd
 
-      - name: Add and commit
+      - name: Commit and push
         run: |
           git fetch --all
           echo "::debug::Author: $GITHUB_ACTOR";
           echo "::debug::Author Email: `git show -s --format='%ae' ${{ github.sha }}`";
-          git commit -am "Build ${{ github.sha }}"
+          git config --global user.name "$GITHUB_ACTOR"
+          git config --global user.email `git show -s --format='%ae' ${{ github.sha }}`
+          git commit -asm "Build ${{ github.sha }}" --allow-empty
           git push origin gh-pages
