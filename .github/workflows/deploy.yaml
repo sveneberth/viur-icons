@@ -1,4 +1,4 @@
-name: Build and Deploy GitHub-Page
+name: Build and Deploy GitHub Page
 on:
   push:
     branches:
@@ -13,15 +13,11 @@ jobs:
         with:
           ref: gh-pages
 
-      - name: Check python
-        run: python3 -V
-
       - name: Submodule init
         run: |
           git submodule set-url icons $GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git
           git submodule init
           git submodule update --recursive
-          git status
 
       - name: Update Submodule icons
         run: |
@@ -30,14 +26,15 @@ jobs:
           git status
           popd
 
-      - name: Build Icon List
-        run: python3 buildIconList.py
+      - name: Build index.html (Icon List)
+        run: |
+          echo "::debug::Python version: `python3 -V`"
+          python3 buildIconList.py
 
       - name: NPM install and run Gulp
         run: |
           pushd sources
           npm install
-          sudo npm install gulp -g
           gulp
           popd
 
