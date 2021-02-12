@@ -45,5 +45,5 @@ jobs:
           echo "::debug::Author Email: `git show -s --format='%ae' ${{ github.sha }}`";
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email `git show -s --format='%ae' ${{ github.sha }}`
-          git commit -asm "Build ${{ github.sha }}" --allow-empty
+          git commit -asm "GitHub Page Build for ${{ github.sha }}" --allow-empty
           git push origin gh-pages
