@@ -13,13 +13,13 @@ jobs:
         with:
           ref: gh-pages
 
-      - name: Submodule init
+      - name: Load submodules
         run: |
           git submodule set-url icons $GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git
           git submodule init
           git submodule update --recursive
 
-      - name: Update Submodule icons
+      - name: Update submodule icons to the current commit
         run: |
           pushd icons
           git checkout ${{ github.sha }}
@@ -28,25 +28,20 @@ jobs:
 
       - name: Build index.html (Icon List)
         run: |
-          echo "::debug::Python version: `python3 -V`"
+          echo "::debug::Using `python3 -V`"
           python3 buildIconList.py
 
-      - name: NPM install and run Gulp
+      - name: Perform npm install and gulp
         run: |
           pushd sources
-          npm install
-          gulp
+          npm ci
+          npx gulp
           popd
 
       - name: Add and commit
         run: |
-          git status
-          git remote -v
           git fetch --all
-          echo "GITHUB_ACTOR: $GITHUB_ACTOR";
-          echo "email: `git show -s --format='%ae' ${{ github.sha }}`";
-          git config --global user.name "$GITHUB_ACTOR"
-          git config --global user.email `git show -s --format='%ae' ${{ github.sha }}`
-          git config --list
+          echo "::debug::Author: $GITHUB_ACTOR";
+          echo "::debug::Author Email: `git show -s --format='%ae' ${{ github.sha }}`";
           git commit -am "Build ${{ github.sha }}"
           git push origin gh-pages
